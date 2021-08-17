@@ -10,7 +10,6 @@
       <router-view style="flex: 1;"></router-view>
     </div>
   </div>
-  <router-view/>
 </template>
 
 <style>
