@@ -20,7 +20,9 @@ public class Result {
     public Result(BaseDTO data){
         this.code = data.getCode();
         this.msg = data.getMsg();
-        if("0".equals(data.getCode())){
+        data.setCode(null);
+        data.setMsg(null);
+        if("0".equals(this.code)){
             this.data = data;
         }
     }
