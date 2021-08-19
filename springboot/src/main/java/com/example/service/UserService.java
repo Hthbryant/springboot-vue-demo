@@ -1,17 +1,18 @@
 package com.example.service;
 
-import com.example.entity.User;
-
-import java.util.List;
+import com.example.common.dto.UserRequestDTO;
+import com.example.common.dto.UserResponseDTO;
 
 public interface UserService {
 
-    List<User> queryUserList();
+    UserResponseDTO queryUserList();
 
-    User querUserInfo(User user);
+    UserResponseDTO querUserInfo(UserRequestDTO requestDTO);
 
-    int updateUser(User user);
+    UserResponseDTO updateUser(UserRequestDTO requestDTO);
 
-    int deleteUser(User user);
+    UserResponseDTO addUser(UserRequestDTO requestDTO);
+
+    UserResponseDTO deleteUser(UserRequestDTO requestDTO);
 
 }

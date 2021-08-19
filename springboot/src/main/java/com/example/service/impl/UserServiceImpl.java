@@ -1,7 +1,8 @@
 package com.example.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.common.dto.UserRequestDTO;
+import com.example.common.dto.UserResponseDTO;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import com.example.service.UserService;
@@ -17,22 +18,30 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public List<User> queryUserList() {
-        return userMapper.selectList(new QueryWrapper<>(null));
+    public UserResponseDTO queryUserList() {
+        List<User> users = userMapper.selectList(new QueryWrapper<>(null));
+        UserResponseDTO response = new UserResponseDTO();
+        response.setUserList(users);
+        return response;
     }
 
     @Override
-    public User querUserInfo(User user) {
+    public UserResponseDTO querUserInfo(UserRequestDTO requestDTO) {
         return null;
     }
 
     @Override
-    public int updateUser(User user) {
-        return 0;
+    public UserResponseDTO updateUser(UserRequestDTO requestDTO) {
+        return null;
     }
 
     @Override
-    public int deleteUser(User user) {
-        return 0;
+    public UserResponseDTO addUser(UserRequestDTO requestDTO) {
+        return null;
+    }
+
+    @Override
+    public UserResponseDTO deleteUser(UserRequestDTO requestDTO) {
+        return null;
     }
 }
