@@ -21,14 +21,13 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/list")
-    public Result<UserResponseDTO> queryUserList(HttpServletRequest httpReq,
+    public Result queryUserList(HttpServletRequest httpReq,
                                                  HttpServletResponse httpResp,
                                                  @RequestBody UserRequestDTO requestDTO) {
-        Result<UserResponseDTO> SystemErrorResult = new Result<>(ErrorEnum.SYSTEM_ERROR);
-        Result<UserResponseDTO> result = new Result<>();
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
             UserResponseDTO userResponseDTO = userService.queryUserList();
-            result.setData(userResponseDTO);
+            Result result = new Result(userResponseDTO);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,14 +36,13 @@ public class UserController {
     }
 
     @RequestMapping("/info")
-    public Result<UserResponseDTO> queryUserInfo(HttpServletRequest httpReq,
+    public Result queryUserInfo(HttpServletRequest httpReq,
                                                  HttpServletResponse httpResp,
                                                  @RequestBody UserRequestDTO requestDTO) {
-        Result<UserResponseDTO> SystemErrorResult = new Result<UserResponseDTO>(ErrorEnum.SYSTEM_ERROR);
-        Result<UserResponseDTO> result = new Result<UserResponseDTO>();
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
             UserResponseDTO userResponseDTO = userService.querUserInfo(requestDTO);
-            result.setData(userResponseDTO);
+            Result result = new Result(userResponseDTO);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,14 +51,13 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    public Result<UserResponseDTO> addUser(HttpServletRequest httpReq,
+    public Result addUser(HttpServletRequest httpReq,
                                                  HttpServletResponse httpResp,
                                                  @RequestBody UserRequestDTO requestDTO) {
-        Result<UserResponseDTO> SystemErrorResult = new Result<UserResponseDTO>(ErrorEnum.SYSTEM_ERROR);
-        Result<UserResponseDTO> result = new Result<UserResponseDTO>();
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
             UserResponseDTO userResponseDTO = userService.addUser(requestDTO);
-            result.setData(userResponseDTO);
+            Result result = new Result(userResponseDTO);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,14 +66,13 @@ public class UserController {
     }
 
     @RequestMapping("/update")
-    public Result<UserResponseDTO> updateUser(HttpServletRequest httpReq,
+    public Result updateUser(HttpServletRequest httpReq,
                                                  HttpServletResponse httpResp,
                                                  @RequestBody UserRequestDTO requestDTO) {
-        Result<UserResponseDTO> SystemErrorResult = new Result<UserResponseDTO>(ErrorEnum.SYSTEM_ERROR);
-        Result<UserResponseDTO> result = new Result<UserResponseDTO>();
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
             UserResponseDTO userResponseDTO = userService.updateUser(requestDTO);
-            result.setData(userResponseDTO);
+            Result result = new Result(userResponseDTO);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,14 +81,13 @@ public class UserController {
     }
 
     @RequestMapping("/delete")
-    public Result<UserResponseDTO> delete(HttpServletRequest httpReq,
+    public Result delete(HttpServletRequest httpReq,
                                           HttpServletResponse httpResp,
                                           @RequestBody UserRequestDTO requestDTO) {
-        Result<UserResponseDTO> SystemErrorResult = new Result<UserResponseDTO>(ErrorEnum.SYSTEM_ERROR);
-        Result<UserResponseDTO> result = new Result<UserResponseDTO>();
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
             UserResponseDTO userResponseDTO = userService.deleteUser(requestDTO);
-            result.setData(userResponseDTO);
+            Result result = new Result(userResponseDTO);
             return result;
         } catch (Exception e) {
             e.printStackTrace();

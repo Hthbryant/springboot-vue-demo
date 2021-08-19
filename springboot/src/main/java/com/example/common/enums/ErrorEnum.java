@@ -3,12 +3,13 @@ package com.example.common.enums;
 public enum ErrorEnum {
 
     SUCCESS("0","成功"),
-    SYSTEM_ERROR("1001","系统错误"),
-    SYSTEM_BUSY("1002","系统繁忙"),
-    BAD_REQUEST("1003","不合法请求"),
+    SYSTEM_ERROR("90901001","系统错误"),
+    SYSTEM_BUSY("90901002","系统繁忙"),
+    BAD_REQUEST("90901003","不合法请求"),
 
     //用户
-    USER_NOT_EXIT("2001","用户不存在"),
+    USER_NOT_EXIT("90902001","用户不存在"),
+    DB_OPERATE_FAIL("90902002","操作数据库失败或无效"),
     ;
 
     ErrorEnum(String code,String msg){

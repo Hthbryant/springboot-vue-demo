@@ -2,11 +2,11 @@ package com.example.common.dto;
 
 import com.example.common.enums.ErrorEnum;
 
-public class Result<T> {
+public class Result {
 
     private String code = "0";
     private String msg = "success";
-    private T data;
+    private BaseDTO data;
 
     public Result(){
 
@@ -17,10 +17,12 @@ public class Result<T> {
         this.msg = errorEnum.getMsg();
     }
 
-    public Result(T data){
-        this.code = "0";
-        this.msg = "success";
-        this.data = data;
+    public Result(BaseDTO data){
+        this.code = data.getCode();
+        this.msg = data.getMsg();
+        if("0".equals(data.getCode())){
+            this.data = data;
+        }
     }
 
     public Result(String code,String msg){
@@ -45,11 +47,11 @@ public class Result<T> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public BaseDTO getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(BaseDTO data) {
         this.data = data;
     }
 }

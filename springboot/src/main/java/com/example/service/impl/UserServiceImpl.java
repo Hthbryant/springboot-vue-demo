@@ -1,11 +1,14 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.common.dto.UserRequestDTO;
 import com.example.common.dto.UserResponseDTO;
+import com.example.common.enums.ErrorEnum;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import com.example.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +30,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO querUserInfo(UserRequestDTO requestDTO) {
-        return null;
+        User user = userMapper.selectById(requestDTO.getId());
+        UserResponseDTO response = new UserResponseDTO();
+        response.setUser(user);
+        return response;
     }
 
     @Override
     public UserResponseDTO updateUser(UserRequestDTO requestDTO) {
-        return null;
+        User update = new User();
+        BeanUtils.copyProperties(requestDTO,update);
+        int result = userMapper.update(update, new UpdateWrapper<>(update));
+        if(result < 1){
+            UserResponseDTO userResponseDTO = new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
+            return userResponseDTO;
+        }
+        return new UserResponseDTO();
     }
 
     @Override
