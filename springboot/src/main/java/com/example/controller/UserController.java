@@ -54,6 +54,7 @@ public class UserController {
     public Result addUser(HttpServletRequest httpReq,
                                                  HttpServletResponse httpResp,
                                                  @RequestBody UserRequestDTO requestDTO) {
+        System.out.println("requestDTO:"+requestDTO);
         Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
             UserResponseDTO userResponseDTO = userService.addUser(requestDTO);

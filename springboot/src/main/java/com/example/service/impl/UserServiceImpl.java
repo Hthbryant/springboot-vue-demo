@@ -50,11 +50,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO addUser(UserRequestDTO requestDTO) {
-        return null;
+        User user = new User();
+        BeanUtils.copyProperties(requestDTO,user);
+        int insert = userMapper.insert(user);
+        if(insert < 1){
+            return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
+        }
+        return new UserResponseDTO();
     }
 
     @Override
     public UserResponseDTO deleteUser(UserRequestDTO requestDTO) {
-        return null;
+        int i = userMapper.deleteById(requestDTO.getId());
+        if(i < 1){
+            return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
+        }
+        return new UserResponseDTO();
     }
 }

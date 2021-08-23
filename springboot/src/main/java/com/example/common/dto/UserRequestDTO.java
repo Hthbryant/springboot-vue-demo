@@ -8,10 +8,11 @@ import lombok.EqualsAndHashCode;
 public class UserRequestDTO extends RequestBaseDTO{
 
     private int id;
-    private String userId;
     private String username;
     private String password;
     private String nickName;
+    private int age;
+    private String sex;
     private String address;
     private String phone;
 
