@@ -1,18 +1,17 @@
-package com.example.demo;
+package com.example.server;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.ComponentScans;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.example")
 @MapperScan(basePackages = "com.example.mapper")
-public class DemoApplication {
+public class SpringbootServer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(SpringbootServer.class, args);
 	}
 
 }
