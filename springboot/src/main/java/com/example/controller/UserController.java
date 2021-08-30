@@ -11,6 +11,8 @@ import com.example.mapper.UserMapper;
 import com.example.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,6 +39,7 @@ public class UserController {
 
 
     @RequestMapping("/list")
+    @Cacheable("userList")
     public Result queryUserList(HttpServletRequest httpReq,
                                 HttpServletResponse httpResp,
                                 @RequestBody UserRequestDTO requestDTO) {
@@ -67,6 +70,7 @@ public class UserController {
     }
 
     @RequestMapping("/add")
+    @CacheEvict("userList")
     public Result addUser(HttpServletRequest httpReq,
                           HttpServletResponse httpResp,
                           @RequestBody UserRequestDTO requestDTO) {
