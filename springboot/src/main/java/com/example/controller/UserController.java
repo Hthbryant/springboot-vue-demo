@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.common.dto.Result;
@@ -31,9 +34,15 @@ public class UserController {
     UserMapper userMapper;
 
     @GetMapping("/page")
-    public Page<User> findPage(@RequestParam Integer currentPage, @RequestParam Integer pageSize, @RequestParam String keyword) {
-        Page<User> userPage = userMapper.selectPage(new Page<>(currentPage, pageSize), Wrappers.<User>lambdaQuery().like(User::getUsername, keyword));
-        log.info("userPage:{}", userPage);
+    public Page<User> findPage(@RequestParam(defaultValue = "1") Integer currentPage,
+                               @RequestParam(defaultValue = "5") Integer pageSize,
+                               @RequestParam(defaultValue = "") String keyword) {
+        LambdaQueryWrapper<User> wrapper = Wrappers.<User>lambdaQuery();
+        if(StringUtils.isNotBlank(keyword)){
+            wrapper.like(User::getNickName, keyword);
+        }
+        Page<User> userPage = userMapper.selectPage(new Page<>(currentPage, pageSize), wrapper);
+        log.info("userPage:{}", JSON.toJSONString(userPage));
         return userPage;
     }
 
