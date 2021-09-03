@@ -6,6 +6,7 @@ public enum ErrorEnum {
     SYSTEM_ERROR("90901001","系统错误"),
     SYSTEM_BUSY("90901002","系统繁忙"),
     BAD_REQUEST("90901003","不合法请求"),
+    PARAM_ERROR("90901004","参数错误"),
 
     //用户
     USER_NOT_EXIT("90902001","用户不存在"),

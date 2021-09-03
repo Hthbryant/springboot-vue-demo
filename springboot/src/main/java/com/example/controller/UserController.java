@@ -95,6 +95,7 @@ public class UserController {
     }
 
     @RequestMapping("/update")
+    @CacheEvict("userList")
     public Result updateUser(HttpServletRequest httpReq,
                              HttpServletResponse httpResp,
                              @RequestBody UserRequestDTO requestDTO) {
@@ -109,14 +110,15 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("/delete/{id}")
+    @CacheEvict("userList")
     public Result delete(HttpServletRequest httpReq,
                          HttpServletResponse httpResp,
-                         @RequestBody UserRequestDTO requestDTO) {
-        log.info("delete user request:{}", requestDTO);
+                         @PathVariable Integer id) {
+        log.info("delete user request id:{}", id);
         Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
         try {
-            UserResponseDTO userResponseDTO = userService.deleteUser(requestDTO);
+            UserResponseDTO userResponseDTO = userService.deleteUser(id);
             return new Result(userResponseDTO);
         } catch (Exception e) {
             log.error("delete user error:", e);

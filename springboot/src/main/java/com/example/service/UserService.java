@@ -13,6 +13,6 @@ public interface UserService {
 
     UserResponseDTO addUser(UserRequestDTO requestDTO);
 
-    UserResponseDTO deleteUser(UserRequestDTO requestDTO);
+    UserResponseDTO deleteUser(Integer id);
 
 }

@@ -8,7 +8,7 @@
     </div>
 <!--    搜索区域-->
     <div style="margin: 10px 0">
-      <el-input v-model="search" placeholder="请输入关键字" style="width: 20%"></el-input>
+      <el-input v-model="search" placeholder="请输入关键字" style="width: 20%" clearable></el-input>
       <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
     </div>
     <el-table
@@ -51,8 +51,7 @@
           width="100">
         <template #default="scope">
           <el-button @click="handleEdit(scope.row)" type="text" size="small">编辑</el-button>
-          <el-popconfirm
-              title="确认删除吗？">
+          <el-popconfirm title="确认删除吗？" @confirm="handleDelete(scope.row.id)">
             <template #reference>
               <el-button type="text" size="small">删除</el-button>
             </template>
@@ -153,18 +152,71 @@ export default {
       this.form = {}
     },
     saveUser(){
-      request.post("/api/user/add",this.form).then(res =>{
+      if (this.form.id){ //更新
+        request.post("/api/user/update",this.form).then(res =>{
+          console.log(res)
+          if(res.code === '0'){
+            this.$message({
+              type:"success",
+              message:"更新成功"
+            })
+          }else {
+            this.$message({
+              type:"error",
+              message:"更新失败"
+            })
+          }
+          this.dialogVisible = false
+          this.load() //刷新页面
+        })
+      } else {  //新增
+        request.post("/api/user/add",this.form).then(res =>{
+          console.log(res)
+          if(res.code === '0'){
+            this.$message({
+              type:"success",
+              message:"新增成功"
+            })
+          }else {
+            this.$message({
+              type:"error",
+              message:"新增失败"
+            })
+          }
+          this.dialogVisible = false
+          this.load()
+        })
+      }
+
+    },
+    handleEdit(row){
+      this.form = JSON.parse(JSON.stringify(row))
+      this.dialogVisible = true
+    },
+    handleSizeChange(pageSize){ //调整显示页数据量
+      this.pageSize = pageSize
+      this.load()
+    },
+    handleCurrentChange(currentPage){  //跳转到指定页码
+      this.currentPage = currentPage
+      this.load()
+    },
+    handleDelete(id){
+      request.get("api/user/delete/" + id).then(res=>{
         console.log(res)
-        this.dialogVisible = false
+        if(res.code === '0'){
+          this.$message({
+            type:"success",
+            message:"删除成功"
+          })
+        }else {
+          this.$message({
+            type:"error",
+            message:"删除失败"
+          })
+        }
+        this.load()
       })
-    },
-    handleEdit(){
-    },
-    handleSizeChange(){
-
-    },
-    handleCurrentChange(){
-
     }
   }
 }

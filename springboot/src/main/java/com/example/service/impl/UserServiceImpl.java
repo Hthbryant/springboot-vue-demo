@@ -1,7 +1,6 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.example.common.dto.UserRequestDTO;
 import com.example.common.dto.UserResponseDTO;
 import com.example.common.enums.ErrorEnum;
@@ -40,7 +39,7 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO updateUser(UserRequestDTO requestDTO) {
         User update = new User();
         BeanUtils.copyProperties(requestDTO,update);
-        int result = userMapper.update(update, new UpdateWrapper<>(update));
+        int result = userMapper.updateById(update);
         if(result < 1){
             UserResponseDTO userResponseDTO = new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
             return userResponseDTO;
@@ -60,8 +59,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDTO deleteUser(UserRequestDTO requestDTO) {
-        int i = userMapper.deleteById(requestDTO.getId());
+    public UserResponseDTO deleteUser(Integer id) {
+        if(id == null){
+            return new UserResponseDTO(ErrorEnum.PARAM_ERROR);
+        }
+        int i = userMapper.deleteById(id);
         if(i < 1){
             return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
         }
