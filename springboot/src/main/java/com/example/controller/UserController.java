@@ -126,4 +126,19 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public Result userLogin(HttpServletRequest httpReq,
+                         HttpServletResponse httpResp,
+                         @RequestBody UserRequestDTO requestDTO) {
+        log.info("user login request :{}", requestDTO.getUsername());
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
+        try {
+            UserResponseDTO userResponseDTO = userService.login(requestDTO);
+            return new Result(userResponseDTO);
+        } catch (Exception e) {
+            log.error("user login error:", e);
+            return SystemErrorResult;
+        }
+    }
+
 }

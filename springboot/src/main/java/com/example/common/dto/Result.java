@@ -2,11 +2,15 @@ package com.example.common.dto;
 
 import com.example.common.enums.ErrorEnum;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 public class Result {
 
     private String code = "0";
     private String msg = "success";
+    private String responseTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     private BaseDTO data;
 
     public Result() {
@@ -56,5 +60,13 @@ public class Result {
 
     public void setData(BaseDTO data) {
         this.data = data;
+    }
+
+    public String getResponseTime() {
+        return responseTime;
+    }
+
+    public void setResponseTime(String responseTime) {
+        this.responseTime = responseTime;
     }
 }

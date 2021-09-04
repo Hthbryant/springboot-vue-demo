@@ -15,4 +15,11 @@ public interface UserService {
 
     UserResponseDTO deleteUser(Integer id);
 
+    /**
+     * 用户登录
+     * @param requestDTO
+     * @return
+     */
+    UserResponseDTO login(UserRequestDTO requestDTO);
+
 }

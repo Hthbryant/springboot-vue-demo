@@ -1,12 +1,15 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.example.common.dto.UserRequestDTO;
 import com.example.common.dto.UserResponseDTO;
 import com.example.common.enums.ErrorEnum;
 import com.example.entity.User;
 import com.example.mapper.UserMapper;
 import com.example.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -68,5 +72,28 @@ public class UserServiceImpl implements UserService {
             return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
         }
         return new UserResponseDTO();
+    }
+
+    @Override
+    public UserResponseDTO login(UserRequestDTO requestDTO) {
+        if(requestDTO == null || StringUtils.isBlank(requestDTO.getUsername()) /*|| StringUtils.isBlank(requestDTO.getPassword())*/){
+            return new UserResponseDTO(ErrorEnum.PARAM_ERROR);
+        }
+        User select = new User();
+        BeanUtils.copyProperties(requestDTO,select);
+        //查询用户是否存在
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername,requestDTO.getUsername()));
+        if(user == null){
+            log.info("user -{} - not exist!!",requestDTO.getUsername());
+            return new UserResponseDTO(ErrorEnum.USER_NOT_EXIT);
+        }
+        //比对密码
+        if(user.getPassword().equals(select.getPassword())){
+            UserResponseDTO responseDTO = new UserResponseDTO(ErrorEnum.SUCCESS);
+            responseDTO.setUser(user);
+            return responseDTO;
+        }else {
+            return new UserResponseDTO(ErrorEnum.PASSWORD_WRONG);
+        }
     }
 }
