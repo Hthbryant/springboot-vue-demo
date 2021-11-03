@@ -12,6 +12,9 @@
         <el-form-item>
           <el-button style="width: 100%;text-align: center;" type="primary" @click="login">登 录</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button style="width: 100%;text-align: center;/*background-color: bisque;*/" type="primary" @click="this.$router.push('/register')">没有账号？这里注册</el-button>
+        </el-form-item>
       </el-form>
     </div>
 
@@ -40,13 +43,13 @@ export default {
     login() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          request.post("api/user/login", this.form).then(res => {
+          request.post("/user/login", this.form).then(res => {
             if (res.code === '0') {
               this.$message({
                 type: "success",
                 message: "登录成功"
               })
-              this.$router.push("/")   //登录成功后跳转到主页
+              this.$router.push("/user")   //登录成功后跳转到主页
             } else {
               this.$message({
                 type: "error",

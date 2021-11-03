@@ -15,6 +15,9 @@
         <el-form-item>
           <el-button style="width: 100%;text-align: center;" type="primary" @click="register">注 册</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button style="width: 100%;text-align: center;" type="primary" @click="this.$router.push('/')">返回到登录界面</el-button>
+        </el-form-item>
       </el-form>
     </div>
 
@@ -53,7 +56,7 @@ export default {
       }
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          request.post("api/user/register", this.form).then(res => {
+          request.post("/user/register", this.form).then(res => {
             if (res.code === '0') {
               this.$message({
                 type: "success",

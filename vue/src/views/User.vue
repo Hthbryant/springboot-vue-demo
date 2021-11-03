@@ -133,7 +133,7 @@ export default {
   },
   methods:{
     load(){
-      request.get("/api/user/page",{
+      request.get("/user/page",{
         params:{
           currentPage : this.currentPage,
           pageSize : this.pageSize,
@@ -153,7 +153,7 @@ export default {
     },
     saveUser(){
       if (this.form.id){ //更新
-        request.post("/api/user/update",this.form).then(res =>{
+        request.post("/user/update",this.form).then(res =>{
           console.log(res)
           if(res.code === '0'){
             this.$message({
@@ -170,7 +170,7 @@ export default {
           this.load() //刷新页面
         })
       } else {  //新增
-        request.post("/api/user/add",this.form).then(res =>{
+        request.post("/user/add",this.form).then(res =>{
           console.log(res)
           if(res.code === '0'){
             this.$message({
@@ -202,7 +202,7 @@ export default {
       this.load()
     },
     handleDelete(id){
-      request.get("api/user/delete/" + id).then(res=>{
+      request.get("/user/delete/" + id).then(res=>{
         console.log(res)
         if(res.code === '0'){
           this.$message({
