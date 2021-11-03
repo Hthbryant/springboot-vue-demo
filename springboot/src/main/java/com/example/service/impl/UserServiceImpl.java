@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO updateUser(UserRequestDTO requestDTO) {
         User update = new User();
-        BeanUtils.copyProperties(requestDTO,update);
+        BeanUtils.copyProperties(requestDTO, update);
         int result = userMapper.updateById(update);
-        if(result < 1){
+        if (result < 1) {
             UserResponseDTO userResponseDTO = new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
             return userResponseDTO;
         }
@@ -54,9 +54,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO addUser(UserRequestDTO requestDTO) {
         User user = new User();
-        BeanUtils.copyProperties(requestDTO,user);
+        BeanUtils.copyProperties(requestDTO, user);
         int insert = userMapper.insert(user);
-        if(insert < 1){
+        if (insert < 1) {
             return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
         }
         return new UserResponseDTO();
@@ -64,11 +64,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO deleteUser(Integer id) {
-        if(id == null){
+        if (id == null) {
             return new UserResponseDTO(ErrorEnum.PARAM_ERROR);
         }
         int i = userMapper.deleteById(id);
-        if(i < 1){
+        if (i < 1) {
             return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
         }
         return new UserResponseDTO();
@@ -76,24 +76,47 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO login(UserRequestDTO requestDTO) {
-        if(requestDTO == null || StringUtils.isBlank(requestDTO.getUsername()) /*|| StringUtils.isBlank(requestDTO.getPassword())*/){
+        if (requestDTO == null || StringUtils.isBlank(requestDTO.getUsername()) /*|| StringUtils.isBlank(requestDTO.getPassword())*/) {
             return new UserResponseDTO(ErrorEnum.PARAM_ERROR);
         }
         User select = new User();
-        BeanUtils.copyProperties(requestDTO,select);
+        BeanUtils.copyProperties(requestDTO, select);
         //查询用户是否存在
-        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername,requestDTO.getUsername()));
-        if(user == null){
-            log.info("user -{} - not exist!!",requestDTO.getUsername());
-            return new UserResponseDTO(ErrorEnum.USER_NOT_EXIT);
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, requestDTO.getUsername()));
+        if (user == null) {
+            log.info("user -{} - not exist!!", requestDTO.getUsername());
+            return new UserResponseDTO(ErrorEnum.USER_NOT_EXIST);
         }
         //比对密码
-        if(user.getPassword().equals(select.getPassword())){
+        if (user.getPassword().equals(select.getPassword())) {
             UserResponseDTO responseDTO = new UserResponseDTO(ErrorEnum.SUCCESS);
             responseDTO.setUser(user);
             return responseDTO;
-        }else {
+        } else {
             return new UserResponseDTO(ErrorEnum.PASSWORD_WRONG);
         }
+    }
+
+    @Override
+    public UserResponseDTO register(UserRequestDTO requestDTO) {
+        if (requestDTO == null || StringUtils.isBlank(requestDTO.getUsername()) || StringUtils.isBlank(requestDTO.getPassword())) {
+            return new UserResponseDTO(ErrorEnum.PARAM_ERROR);
+        }
+        User select = new User();
+        select.setUsername(requestDTO.getUsername());
+        //查询用户是否存在
+        User user = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, requestDTO.getUsername()));
+        if (user != null) {
+            log.info("user -{} - existed!!", requestDTO.getUsername());
+            return new UserResponseDTO(ErrorEnum.USER_EXIST);
+        }
+        //添加一个用户
+        select.setPassword(requestDTO.getPassword());
+        int insert = userMapper.insert(select);
+        if (insert < 1) {
+            log.error("user register failed!!!");
+            return new UserResponseDTO(ErrorEnum.DB_OPERATE_FAIL);
+        }
+        return new UserResponseDTO(ErrorEnum.SUCCESS);
     }
 }

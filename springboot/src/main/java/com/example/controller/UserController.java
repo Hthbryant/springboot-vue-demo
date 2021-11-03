@@ -141,4 +141,19 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    public Result userRegister(HttpServletRequest httpReq,
+                            HttpServletResponse httpResp,
+                            @RequestBody UserRequestDTO requestDTO) {
+        log.info("user register request :{}", requestDTO.getUsername());
+        Result SystemErrorResult = new Result(ErrorEnum.SYSTEM_ERROR);
+        try {
+            UserResponseDTO userResponseDTO = userService.register(requestDTO);
+            return new Result(userResponseDTO);
+        } catch (Exception e) {
+            log.error("user register error:", e);
+            return SystemErrorResult;
+        }
+    }
+
 }

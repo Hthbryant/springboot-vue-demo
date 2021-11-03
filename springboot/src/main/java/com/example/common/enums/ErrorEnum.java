@@ -9,7 +9,8 @@ public enum ErrorEnum {
     PARAM_ERROR("90901004","参数错误"),
 
     //用户
-    USER_NOT_EXIT("90902001","用户不存在"),
+    USER_NOT_EXIST("90902001","用户不存在"),
+    USER_EXIST("90902001","用户已存在"),
     DB_OPERATE_FAIL("90902002","操作数据库失败或无效"),
     PASSWORD_WRONG("90902003","密码错误"),
     ;

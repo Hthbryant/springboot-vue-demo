@@ -22,4 +22,11 @@ public interface UserService {
      */
     UserResponseDTO login(UserRequestDTO requestDTO);
 
+    /**
+     * 用户注册
+     * @param requestDTO
+     * @return
+     */
+    UserResponseDTO register(UserRequestDTO requestDTO);
+
 }
