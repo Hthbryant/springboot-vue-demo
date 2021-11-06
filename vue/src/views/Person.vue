@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%;height: 100vh;background-color: darkslateblue;overflow: hidden">
     <div style="width: 400px;margin: 150px auto">
-      <div style="color: #cccccc;font-size: 30px;text-align: center;padding: 30px">欢迎登录</div>
+      <div style="color: #cccccc;font-size: 30px;text-align: center;padding: 30px">个人信息</div>
       <el-form ref="form" :model="form" size="normal" :rules="rules">
         <el-form-item prop="username">
           <el-input prefix-icon="el-icon-user" v-model="form.username"></el-input>
@@ -10,22 +10,18 @@
           <el-input prefix-icon="el-icon-key" type="password" v-model="form.password" show-password></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button style="width: 100%;text-align: center;" type="primary" @click="login">登 录</el-button>
-        </el-form-item>
-        <el-form-item>
-          <el-button style="width: 100%;text-align: center;/*background-color: bisque;*/" type="primary" @click="this.$router.push('/register')">没有账号？这里注册</el-button>
+          <el-button style="width: 100%;text-align: center;" type="primary" @click="updateUser">修改信息</el-button>
         </el-form-item>
       </el-form>
     </div>
   </div>
-
 </template>
 
 <script>
 import request from "../utils/request";
 
 export default {
-  name: "Login",
+  name: "Person.vue",
   data() {
     return {
       form: {},
@@ -39,17 +35,15 @@ export default {
       }
     }
   }, methods: {
-    login() {
+    updateUser() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          request.post("/user/login", this.form).then(res => {
+          request.post("/user/update", this.form).then(res => {
             if (res.code === '0') {
               this.$message({
                 type: "success",
-                message: "登录成功"
+                message: "修改成功"
               })
-              //将用户信息存到session中
-              sessionStorage.setItem("user",JSON.stringify(res.data))
               this.$router.push("/user")   //登录成功后跳转到主页
             } else {
               this.$message({

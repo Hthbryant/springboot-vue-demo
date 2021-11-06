@@ -2,13 +2,14 @@
   <div >
     <el-menu
         style="width: 200px;height: calc(100vh - 50px)"
-        default-active="1-1"
+        default-active="book"
+        router
         :default-openeds="[1]"
         class="el-menu-vertical-demo">
         <el-submenu index="1">
           <template #title>系统管理</template>
-          <el-menu-item index="1-1">用户管理</el-menu-item>
-          <el-menu-item index="1-2">课程管理</el-menu-item>
+          <el-menu-item index="user">用户管理</el-menu-item>
+          <el-menu-item index="book">书籍管理</el-menu-item>
         </el-submenu>
       <el-submenu index="2">
         <template #title>校园信息</template>
