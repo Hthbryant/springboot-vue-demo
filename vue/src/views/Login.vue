@@ -49,7 +49,7 @@ export default {
                 message: "登录成功"
               })
               //将用户信息存到session中
-              sessionStorage.setItem("user",JSON.stringify(res.data))
+              sessionStorage.setItem("user",JSON.stringify(res.data.user))
               this.$router.push("/user")   //登录成功后跳转到主页
             } else {
               this.$message({

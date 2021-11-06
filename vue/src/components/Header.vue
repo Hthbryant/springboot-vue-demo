@@ -5,7 +5,7 @@
     <div style="width: 100px" ref="user">
       <el-dropdown>
         <span class="el-dropdown-link">
-          hhhhh
+          {{user.username}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
@@ -21,7 +21,21 @@
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data(){
+    return{
+      user:{}
+    }
+  },
+  created() {
+    this.loadUserInfo();
+  },methods:{
+    loadUserInfo(){
+      //获取用户信息
+      var userStr = sessionStorage.getItem("user")
+      this.user = JSON.parse(userStr)
+    }
+  }
 }
 </script>
 
