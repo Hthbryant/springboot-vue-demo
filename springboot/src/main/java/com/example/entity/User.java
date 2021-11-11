@@ -15,10 +15,9 @@ import lombok.experimental.Accessors;
 @TableName("user")
 public class User {
 
-    @TableId(value = "id",type = IdType.AUTO)
-
     //用户id
-    private int id;
+    @TableId(value = "id",type = IdType.AUTO)
+    private Integer id;
     //用户名
     private String username;
     //用户密码
@@ -28,7 +27,7 @@ public class User {
     //用户地址
     private String address;
     //年龄
-    private int age;
+    private Integer age;
     //性别
     private String sex;
     //电话

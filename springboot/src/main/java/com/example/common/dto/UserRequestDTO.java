@@ -7,11 +7,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class UserRequestDTO extends RequestBaseDTO{
 
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private String nickName;
-    private int age;
+    private Integer age;
     private String sex;
     private String address;
     private String phone;

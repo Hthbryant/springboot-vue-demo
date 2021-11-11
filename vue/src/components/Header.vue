@@ -11,7 +11,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item @click="this.$router.push('/person')">个人信息</el-dropdown-item>
-            <el-dropdown-item @click="this.$router.push('/login')">退出登录</el-dropdown-item>
+            <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -32,8 +32,15 @@ export default {
   },methods:{
     loadUserInfo(){
       //获取用户信息
-      var userStr = sessionStorage.getItem("user")
-      this.user = JSON.parse(userStr)
+      let userStr = sessionStorage.getItem("user")
+      if (userStr !== null) {
+        this.user = JSON.parse(userStr)
+      }
+    },
+    logout(){
+      //注销登录，清除用户信息
+      sessionStorage.removeItem("user")
+      this.$router.push('/login')
     }
   }
 }

@@ -2,7 +2,7 @@
   <div >
     <el-menu
         style="width: 200px;height: calc(100vh - 50px)"
-        default-active="book"
+        default-active="user"
         router
         :default-openeds="[1]"
         class="el-menu-vertical-demo">

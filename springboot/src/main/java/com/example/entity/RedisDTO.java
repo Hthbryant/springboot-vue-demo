@@ -14,7 +14,14 @@ import java.io.Serializable;
 @Data
 public class RedisDTO implements Serializable {
 
+    /**
+     * key值
+     */
     private String key;
+
+    /**
+     * value值
+     */
     private String value;
 
 }
